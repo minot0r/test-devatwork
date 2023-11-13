@@ -2,6 +2,7 @@
 
 The following repository contains all the following challenges
 
+
 ## Problem of the ranges
 
 > The objective of the program is to group series of consecutive numbers according to a set of
