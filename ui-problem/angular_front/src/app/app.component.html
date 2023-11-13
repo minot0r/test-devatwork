@@ -1,0 +1,62 @@
+<div class="bg-slate-50">
+  <app-modal
+    title="Add users from CSV"
+    [open]="isAddUsersModalOpened"
+    (onclose)="closeAddUsersModal()"
+  >
+    <textarea
+      class="w-full border rounded-sm min-h-[200px]"
+      placeholder="Paste here your users from CSV"
+      (change)="onUsersCsvChange($event)"
+      >{{ usersCsv }}</textarea
+    >
+
+    <button (click)="addUsersCsv()" class="p-2 bg-white border rounded-lg">
+      Add users from CSV
+    </button>
+  </app-modal>
+  <app-modal
+    title="User details"
+    [open]="isUserDetailsModalOpened"
+    (onclose)="closeUserDetailsModal()"
+  >
+    <div class="flex flex-col gap-2">
+      <p class="font-bold text-lg">
+        Manage user {{ userDetails?.name }} {{ userDetails?.surname }} ({{
+          userDetails?.id
+        }}).
+      </p>
+      <div class="flex flex-col gap-2 border-red-700 bg-red-200 rounded-lg p-2">
+        <p class="font-extrabold text-md text-red-700">Danger zone</p>
+        <div class="flex flex-row gap-2">
+          <button
+            (click)="deleteUser(userDetails?.id!)"
+            class="p-2 bg-red-800 text-white border rounded-lg"
+          >
+            Delete user
+          </button>
+        </div>
+      </div>
+    </div>
+  </app-modal>
+
+  <div class="flex flex-row w-full p-8 bg-white shadow-lg rounded-b-lg">
+    <h1 class="text-2xl font-bold">User management</h1>
+  </div>
+
+  <div class="m-8 border rounded-lg">
+    <div class="flex mt-4 mx-4">
+      <button
+        (click)="openAddUsersModal()"
+        class="p-2 bg-white border rounded-lg"
+      >
+        Add users from CSV
+      </button>
+    </div>
+    <app-datatable
+      (rowdblclick)="onReqUserDetails($event)"
+      [dtSubject]="dtSubject"
+      [dtConfig]="dtConfig"
+    />
+  </div>
+</div>

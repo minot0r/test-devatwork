@@ -1,0 +1,80 @@
+<div class="flex flex-col gap-4 m-4">
+  <table class="w-full border bg-white rounded-lg">
+    <thead>
+      <ng-container>
+        <tr>
+          <ng-container *ngFor="let column of dtConfig.columnsConfig">
+            <th
+              (click)="onColumnClick(column.field)"
+              align="left"
+              class="p-2 border-r border-b cursor-pointer"
+            >
+              {{ column.title }} {{ columnDecorator(column.field) }}
+            </th>
+          </ng-container>
+        </tr>
+      </ng-container>
+    </thead>
+    <tbody>
+      <ng-template
+        *ngIf="data.length > 0"
+        ngFor
+        let-row
+        let-i="index"
+        [ngForOf]="data"
+      >
+        <tr
+          class="hover:bg-slate-200 transition-colors duration-300"
+          [ngClass]="{ 'bg-slate-50': i % 2 === 0 }"
+          (dblclick)="onRowDoubleClick(row)"
+        >
+          <ng-container *ngFor="let column of dtConfig.columnsConfig">
+            <td class="p-2 border-r border-b cursor-pointer">
+              {{
+                column.render
+                  ? column.render(row[column.field])
+                  : row[column.field]
+              }}
+            </td>
+          </ng-container>
+        </tr>
+      </ng-template>
+      <ng-template *ngIf="data.length == 0">
+        <tr>
+          <td class="p-2 border-r border-b" colspan="3">Loading...</td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+  <div class="flex flex-row items-center justify-between">
+    <p>
+      Showing {{ dtConfig.maxRows * (page - 1) + 1 }} to
+      {{ Math.min(dtConfig.maxRows * page, total) }} of {{ total }} entries
+    </p>
+    <div class="flex flex-row gap-2">
+      <button
+        class="h-[36px] px-2 border rounded-lg disabled:cursor-not-allowed disabled:text-slate-700"
+        [disabled]="!hasPrevious()"
+        (click)="previousPage()"
+      >
+        Previous
+      </button>
+      <ng-template ngFor let-i [ngForOf]="buttons">
+        <button
+          class="h-[36px] w-[36px] border rounded-lg aspect-square"
+          [ngClass]="{ 'bg-slate-200': i === page }"
+          (click)="setPage(i)"
+        >
+          {{ i }}
+        </button>
+      </ng-template>
+      <button
+        class="h-[36px] px-2 border rounded-lg disabled:cursor-not-allowed disabled:text-slate-700"
+        [disabled]="!hasNext()"
+        (click)="nextPage()"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+</div>

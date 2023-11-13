@@ -1,0 +1,16 @@
+<div
+  *ngIf="open"
+  class="bg-slate-900 bg-opacity-50 w-screen h-screen fixed top-0 left-0 flex flex-col justify-center items-center z-[21052001]"
+>
+  <div
+    class="bg-white shadow-lg rounded-lg p-4 min-h-[80dvh] sm:min-h-fit w-[500px] max-w-[50vw]"
+  >
+    <div class="flex flex-row justify-between items-center mb-8 gap-2">
+      <h1 class="text-xl font-bold">{{ title }}</h1>
+      <button class="p-2 bg-white border rounded-lg" (click)="close()">
+        Close
+      </button>
+    </div>
+    <ng-content></ng-content>
+  </div>
+</div>
